@@ -262,7 +262,7 @@ class NovatelPublisher(object):
         # TODO: Supply this data in the IMU and Odometry messages.
         pass
 
-    def rawimu_handler(self, rawimus: RAWIMU):
+    def rawimu_handler(self, rawimus):
         imu = Imu()
         imu.header.frame_id = self.base_frame
         if self.use_gps_ts:

@@ -1,7 +1,7 @@
 <launch>
     <!-- connect_type: TCP/SERIAL -->
     <arg name="connect_type" default="SERIAL"/>
-    <arg name="dev_no" default="/dev/mcu_uart"/>
+    <arg name="dev_no" default="/dev/novatel"/>
     <arg name="baudrate" default="9600"/>
 
     <node name="novatel_span_driver" pkg="novatel_span_driver" type="driver">
