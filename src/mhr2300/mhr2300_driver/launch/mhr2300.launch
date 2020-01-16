@@ -1,0 +1,9 @@
+<launch>
+    <arg name="dev_no" default="/dev/ttyUSB18"/>
+    <arg name="baudrate" default="9600"/>
+
+    <node name="mhr2300_driver" pkg="mhr2300_driver" type="driver">
+        <param name="dev_no" value="$(arg dev_no)"/>
+        <param name="baudrate" value="$(arg baudrate)"/>
+    </node>
+</launch>

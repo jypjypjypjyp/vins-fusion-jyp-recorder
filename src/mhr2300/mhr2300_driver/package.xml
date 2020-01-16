@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <name>mhr2300_driver</name>
+  <version>0.0.0</version>
+  <description>The mhr2300_driver package</description>
+
+  <author email="jypjypjypjyp@hotmail.com">jyp</author>
+  <maintainer email="jypjypjypjyp@hotmail.com">jyp</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roslaunch</build_depend>
+  <build_depend>roslint</build_depend>
+
+  <run_depend>mhw2300_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>python-serial</run_depend>
+  <run_depend>rospy</run_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
