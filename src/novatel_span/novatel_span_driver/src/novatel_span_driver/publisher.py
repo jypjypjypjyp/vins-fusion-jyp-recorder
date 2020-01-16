@@ -79,6 +79,7 @@ class NovatelPublisher(object):
         self.publish_tf = rospy.get_param('~publish_tf', False)
         self.odom_frame = rospy.get_param('~odom_frame', 'odom_combined')
         self.base_frame = rospy.get_param('~base_frame', 'base_link')
+        self.use_gps_ts = rospy.get_param('~use_gps_ts', False)
 
         # When True, UTM odom x, y pose will be published with respect to the
         # first coordinate received.
@@ -261,11 +262,15 @@ class NovatelPublisher(object):
         # TODO: Supply this data in the IMU and Odometry messages.
         pass
 
-    def rawimu_handler(self, rawimus):
+    def rawimu_handler(self, rawimus: RAWIMU):
         imu = Imu()
-        imu.header.stamp = rospy.Time.now()
-        #imu.header.stamp = rawimus
         imu.header.frame_id = self.base_frame
+        if self.use_gps_ts:
+            imu.header.stamp.secs = int(rawimus.gpssec)
+            imu.header.stamp.nsecs = int(
+                (rawimus.gpssec - int(rawimus.gpssec)) * 1e9)
+        else:
+            imu.header.stamp = rospy.Time.now()
 
         # Populate orientation field with one from inspvax message.
         imu.orientation = Quaternion(*self.orientation)
@@ -273,14 +278,17 @@ class NovatelPublisher(object):
 
         # Angular rates (rad/s)
         # corrimudata log provides instantaneous rates so multiply by IMU rate in Hz
-        imu.angular_velocity.x = rawimus.x_gyro * 0.1 / (3600.0 * 256.0) * self.imu_rate
-        imu.angular_velocity.y = -rawimus.my_gyro * 0.1 / (3600.0 * 256.0) * self.imu_rate
-        imu.angular_velocity.z = rawimus.z_gyro * 0.1 / (3600.0 * 256.0) * self.imu_rate
+        imu.angular_velocity.x = rawimus.x_gyro * \
+            0.1 / (3600.0 * 256.0) * self.imu_rate
+        imu.angular_velocity.y = -rawimus.my_gyro * \
+            0.1 / (3600.0 * 256.0) * self.imu_rate
+        imu.angular_velocity.z = rawimus.z_gyro * \
+            0.1 / (3600.0 * 256.0) * self.imu_rate
         imu.angular_velocity_covariance = IMU_VEL_COVAR
 
         # Linear acceleration (m/s^2)
         imu.linear_acceleration.x = rawimus.x_accel * 0.05 / 2**15 * self.imu_rate
-        imu.linear_acceleration.y = rawimus.my_accel * 0.05 / 2**15 * self.imu_rate
+        imu.linear_acceleration.y = -rawimus.my_accel * 0.05 / 2**15 * self.imu_rate
         imu.linear_acceleration.z = rawimus.z_accel * 0.05 / 2**15 * self.imu_rate
         imu.linear_acceleration_covariance = IMU_ACCEL_COVAR
 

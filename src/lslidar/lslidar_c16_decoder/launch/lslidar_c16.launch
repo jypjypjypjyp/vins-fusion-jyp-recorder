@@ -20,7 +20,7 @@
     <param name="frequency" value="10.0"/>
     <param name="publish_point_cloud" value="true"/>
     <param name="publish_scan" value="true"/>
-    <param name="use_gps_ts" value="false"/>
+    <param name="use_gps_ts" value="true"/>
   </node>
   
 

@@ -33,6 +33,7 @@
         <param name="publish_tf" value="true"/>
         <param name="odom_frame" value="odom"/>
         <param name="base_frame" value="base_link"/>
+        <param name="use_gps_ts" value="true"/>
 
         <!-- IMU rate; controls scaling of the imu/data topic values. This is a
              function of the underlying hardware IMU rate, which is 100Hz for IMU-CPT. -->
