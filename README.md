@@ -7,3 +7,7 @@ ros driver for the recorder of vins-fusion-jyp
 * novatel_span
 * recorder_description
 
+```
+rosbag record /imu/data /lslidar_point_cloud
+```
+
